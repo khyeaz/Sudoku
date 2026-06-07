@@ -4,6 +4,9 @@ public class Cell {
     int col;
     char row;
     int value;
+    Row parentRow; 
+    CellGroup parentCol;
+    Square square;
 
     public Cell(int col, char row) {
         this.col = col;

@@ -1,13 +1,9 @@
 package com.sudoku.domain;
 
-public class Column {
-    Cell[] cells;
-    char colChar;
+public class Column extends CellGroup {
 
-    public Column(Cell[] cells, char colChar) {
-        this.cells = cells;
-        this.colChar = colChar;
+    public Column(Cell[] cells, String colNum) {
+        super(cells, colNum);
     }
 
-    
 }

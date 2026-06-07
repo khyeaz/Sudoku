@@ -41,6 +41,5 @@ public class CellTest {
 
         int value2 = 10;
         assertThrows(IllegalArgumentException.class, () -> cell.setValue(value2));
-
     }
 }
