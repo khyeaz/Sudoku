@@ -1,16 +1,17 @@
 package com.sudoku.domain;
 
 public class Cell {
-    int col;
-    char row;
-    int value;
+    String col;
+    String row;
+    Integer value;
     Row parentRow; 
-    CellGroup parentCol;
-    Square square;
+    Column parentCol;
+    Square parentSquare;
 
-    public Cell(int col, char row) {
-        this.col = col;
+    public Cell(String row, String col) {
         this.row = row;
+        this.col = col;
+        value = null;
     }
 
     public int getValue() {
@@ -24,11 +25,39 @@ public class Cell {
         this.value = value;
     }
 
-    public int getCol() {
+    public void removeValue() {
+        value = null;
+    }
+
+    public String getCol() {
         return col;
     }
 
-    public char getRow() {
+    public String getRow() {
         return row;
+    }
+
+    public Row getParentRow() {
+        return parentRow;
+    }
+
+    public void setParentRow(Row parentRow) {
+        this.parentRow = parentRow;
+    }
+
+    public CellGroup getParentCol() {
+        return parentCol;
+    }
+
+    public void setParentCol(Column parentCol) {
+        this.parentCol = parentCol;
+    }
+
+    public Square getParentSquare() {
+        return parentSquare;
+    }
+
+    public void setParentSquare(Square parentSquare) {
+        this.parentSquare = parentSquare;
     }
 }

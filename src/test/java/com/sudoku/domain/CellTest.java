@@ -7,18 +7,18 @@ import org.junit.jupiter.api.Test;
 public class CellTest {
     @Test
     void testNewCell() {
-        int col = 1;
-        char row = 'A';
-        Cell cell = new Cell(col, row);
+        String col = "1";
+        String row = "A";
+        Cell cell = new Cell(row, col);
         assertEquals(col, cell.getCol());
         assertEquals(row, cell.getRow());
     }
 
     @Test
     void testValidValue() {
-        int col = 2;
-        char row = 'B';
-        Cell cell = new Cell(col, row);
+        String col = "2";
+        String row = "B";
+        Cell cell = new Cell(row, col);
 
         int value = 1;
         cell.setValue(value);
@@ -32,9 +32,9 @@ public class CellTest {
     @Test
     @SuppressWarnings("ThrowableResultIgnored")
     void testInvalidValue() {
-        int col = 9;
-        char row = 'I';
-        Cell cell = new Cell(col, row);
+        String col = "9";
+        String row = "I";
+        Cell cell = new Cell(row, col);
 
         int value = 0;
         assertThrows(IllegalArgumentException.class, () -> cell.setValue(value));
