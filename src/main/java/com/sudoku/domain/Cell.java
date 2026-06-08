@@ -60,4 +60,8 @@ public class Cell {
     public void setParentSquare(Square parentSquare) {
         this.parentSquare = parentSquare;
     }
+
+    public boolean isFilled() {
+        return value != null;
+    }
 }

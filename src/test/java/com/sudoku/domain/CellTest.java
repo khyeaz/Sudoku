@@ -1,7 +1,9 @@
 package com.sudoku.domain;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.Test;
 
 public class CellTest {
@@ -41,5 +43,21 @@ public class CellTest {
 
         int value2 = 10;
         assertThrows(IllegalArgumentException.class, () -> cell.setValue(value2));
+    }
+
+    @Test
+    void testIsFilledAndRemoveValue() {
+        String col = "8";
+        String row = "E";
+        Cell cell = new Cell(row, col);
+
+        assertFalse(cell.isFilled(), "New Cell should be empty");
+
+        cell.setValue(1);
+        assertTrue(cell.isFilled(), "Cell should be considered filled after a value is set");
+
+        cell.removeValue();
+        assertFalse(cell.isFilled(), "Cell should be considered empty after value is removed");
+        assertEquals(null, cell.getValue(), "No value should be present after removal");
     }
 }
