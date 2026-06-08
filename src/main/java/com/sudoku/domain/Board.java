@@ -77,4 +77,20 @@ public class Board {
             }
         }
     }
+
+    public Map<String, Row> getRows() {
+        return rows;
+    }
+
+    public Map<String, Column> getCols() {
+        return cols;
+    }
+
+    public Map<String, Square> getSquares() {
+        return squares;
+    }
+
+    public Map<String, Cell> getCells() {
+        return cells;
+    }
 }
