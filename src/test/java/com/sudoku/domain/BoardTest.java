@@ -91,4 +91,12 @@ public class BoardTest {
             assertEquals(expectedCell.getParentSquare(), square, "Parent square must match for cell " + cellIDs[i]);
         }
     }
+
+    @Test
+    void testBoardObjectCount() {
+        assertEquals(81, board.getCells().size(), "Board must have 81 cells");
+        assertEquals(9, board.getCols().size(), "Board must have 9 columns");
+        assertEquals(9, board.getRows().size(), "Board must have 9 rows");
+        assertEquals(9, board.getSquares().size(), "Board must have 9 squares");
+    }
 }

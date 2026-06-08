@@ -16,7 +16,7 @@ public class PuzzleGenerator {
         fillDiagonalSquaresRandomly(board);
 
         Solver solver = new SimpleSolver();
-        Board solved = solver.solve(board);
+        Board solved = solver.solveAny(board);
 
         // TODO
 
