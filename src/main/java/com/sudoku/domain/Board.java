@@ -1,6 +1,8 @@
 package com.sudoku.domain;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class Board {
@@ -92,5 +94,14 @@ public class Board {
 
     public Map<String, Cell> getCells() {
         return cells;
+    }
+
+    public List<CellGroup> getAllCellGroups() {
+        List<CellGroup> groups = new ArrayList<>();
+        groups.addAll(cols.values());
+        groups.addAll(rows.values());
+        groups.addAll(squares.values());
+
+        return groups;
     }
 }
