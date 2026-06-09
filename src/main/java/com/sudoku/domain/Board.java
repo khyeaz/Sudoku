@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 public class Board {
     Map<String, Row> rows;
@@ -103,5 +104,41 @@ public class Board {
         groups.addAll(squares.values());
 
         return groups;
+    }
+
+    @Override
+    public String toString() {
+        String result = "";
+
+        for (String row : rowIDs) {
+            for (String col : colIDs) {
+                result += Objects.toString(cells.get(row+col).getValue(), "_");
+            }
+
+            result += "\n";
+        }
+
+        return result;
+    }
+
+    public void setAllValuesFromString(String values) {
+        String[] split = values.split("");
+        int splitIndex = 0;
+
+        for (String row : rowIDs) {
+            for (String col : colIDs) {
+                if ("\n".equals(split[splitIndex])) {
+                    splitIndex++;
+                }
+
+                Cell cell = cells.get(row + col);
+                if ("_".equals(split[splitIndex])) {
+                    cell.removeValue();
+                } else {
+                    cell.setValue(Integer.parseInt(split[splitIndex]));
+                }
+                splitIndex++;
+            }
+        }
     }
 }

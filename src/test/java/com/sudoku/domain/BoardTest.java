@@ -99,4 +99,13 @@ public class BoardTest {
         assertEquals(9, board.getRows().size(), "Board must have 9 rows");
         assertEquals(9, board.getSquares().size(), "Board must have 9 squares");
     }
+
+    @Test
+    void testSetAllValuesFromString() {
+        String line1 = "123456789\n";
+        String line2 = "__123__45\n";
+        String test1 = line1 + line2 + line1 + line2 + line1 + line2 + line1 + line2 + line1;
+        board.setAllValuesFromString(test1);
+        assertEquals(test1, board.toString());
+    }
 }
