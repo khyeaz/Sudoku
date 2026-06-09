@@ -1,7 +1,10 @@
 package com.sudoku;
 
+import com.sudoku.game.SudokuGame;
+
 public class Main {
     public static void main(String[] args) {
-        System.out.println("Hello world!");
+        SudokuGame game = new SudokuGame();
+        game.run();
     }
 }
