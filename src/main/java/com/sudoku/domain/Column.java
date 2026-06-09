@@ -3,7 +3,7 @@ package com.sudoku.domain;
 public class Column extends CellGroup {
 
     public Column(Cell[] cells, String colNum) {
-        super(cells, colNum);
+        super(cells, colNum, CellGroup.GROUPTYPE_COL);
     }
 
 }

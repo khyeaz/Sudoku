@@ -12,6 +12,6 @@ public class Square extends CellGroup {
     */
 
     public Square(Cell[] cells, String squareID) {
-        super(cells, squareID);
+        super(cells, squareID, CellGroup.GROUPTYPE_SQUARE);
     }
 }
