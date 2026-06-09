@@ -2,6 +2,9 @@ package com.sudoku.game;
 
 import java.util.Scanner;
 
+import com.sudoku.domain.CellGroup;
+import com.sudoku.logic.CheckerResult;
+
 public class IOHandler {
     Scanner scanner;
 
@@ -15,6 +18,18 @@ public class IOHandler {
     static final String INVALID_COMMAND = "Invalid command given!";
     static final String THANKS = "Thanks for playing!";
     static final String COMPLETE = "You have successfully completed the Sudoku puzzle!\nPress any key to play again...";
+    static final String HINT1 = "Hint: Cell ";
+    static final String HINT2 = " = ";
+    static final String CLEARED = "Cleared Cell ";
+    static final String CHECK_PASSED = "No rule violations detected.";
+    static final String CHECK_FAILED1 = "Number ";
+    static final String CHECK_FAILED2 = " already exists in ";
+    static final String GROUP_ROW = "Row ";
+    static final String GROUP_COL = "Column ";
+    static final String GROUP_SQUARE = "the same 3x3 subgrid ";
+    static final String PREFILLED1 = "Invalid move. ";
+    static final String PREFILLED2 = " is pre-filled";
+    static final String COMPLETE_INVALID = "Board is filled up, but some rule violations exist. Run the 'check' command to find out where.";
 
     public IOHandler(Scanner scanner) {
         this.scanner = scanner;
@@ -71,11 +86,11 @@ public class IOHandler {
         }
     }
 
-    private boolean isValidCellID(String cellID) {
+    boolean isValidCellID(String cellID) {
         return cellID != null && cellID.matches("^[A-I][1-9]$");
     }
 
-    private boolean isValidCellValue(String value) {
+    boolean isValidCellValue(String value) {
         return value != null && value.matches("^[1-9]$");
     }
 
@@ -89,6 +104,84 @@ public class IOHandler {
 
     void printComplete() {
         System.out.println(COMPLETE);
+    }
+
+    void printHint(String chosenCellID, Integer value) {
+        System.out.println(HINT1 + chosenCellID + HINT2 + value);
+    }
+
+    void printCleared(String cellID) {
+        System.out.println(CLEARED + cellID);
+    }
+
+    void printCheck(CheckerResult result) {
+        if (result.isValid()) {
+            System.out.println(CHECK_PASSED);
+        } else {
+            String cellGroupType = "";
+            String cellGroupID = "";
+
+            switch (result.getInvalidGroupType()) {
+                case CellGroup.GROUPTYPE_COL:
+                    cellGroupType = GROUP_COL;
+                    cellGroupID = result.getInvalidGroupID();
+                    break;
+                case CellGroup.GROUPTYPE_ROW:
+                    cellGroupType = GROUP_ROW;
+                    cellGroupID = result.getInvalidGroupID();
+                    break;
+                case CellGroup.GROUPTYPE_SQUARE:
+                    cellGroupType = GROUP_SQUARE;
+                    cellGroupID = getSquareDescription(result.getInvalidGroupID());
+                    break;
+                default:
+                    break;
+            }
+            System.out.println(CHECK_FAILED1 + result.getRepeatedValue() + CHECK_FAILED2 + cellGroupType + cellGroupID);
+        }
+    }
+
+    private String getSquareDescription(String squareID) {
+        String description = "(";
+        Integer index = Integer.valueOf(squareID);
+
+        switch (index/3) {
+            case 0:
+                description += "top-";
+                break;
+            case 1:
+                description += "middle-";
+                break;
+            case 2:
+                description += "bottom-";
+                break;
+            default:
+                break;
+        }
+
+        switch (index % 3) {
+            case 0:
+                description += "left)";
+                break;
+            case 1:
+                description += "middle)";
+                break;
+            case 2:
+                description += "right)";
+                break;
+            default:
+                break;
+        }
+
+        return description;
+    }
+
+    void printPrefilled(String cellID) {
+        System.out.println(PREFILLED1 + cellID + PREFILLED2);
+    }
+
+    void printCompleteButInvalid() {
+        System.out.println(COMPLETE_INVALID);
     }
 
 }

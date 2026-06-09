@@ -1,18 +1,27 @@
 package com.sudoku.game;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map.Entry;
 import java.util.Scanner;
+import java.util.Set;
 
 import com.sudoku.domain.Board;
+import com.sudoku.domain.Cell;
+import com.sudoku.logic.Checker;
+import com.sudoku.logic.CheckerResult;
 import com.sudoku.logic.PuzzleGenerator;
 import com.sudoku.logic.SimpleSolver;
 import com.sudoku.logic.Solver;
 
 public class SudokuGame {
-    IOHandler iohandler;
+    IOHandler ioHandler;
     PuzzleGenerator puzzleGenerator;
     Solver solver;
     Board board;
     Board solution;
+    Set<String> prefilledCellIDs;
 
     public void run() {
         try (Scanner scanner = new Scanner(System.in)) {
@@ -26,7 +35,7 @@ public class SudokuGame {
                 boolean thisGameContinues = true;
 
                 while (thisGameContinues) {
-                    PlayerInput playerInput = iohandler.getPlayerInput();
+                    PlayerInput playerInput = ioHandler.getPlayerInput();
 
                     switch (playerInput.getAction()) {
                         case PlayerInput.ACTION_QUIT: 
@@ -43,7 +52,7 @@ public class SudokuGame {
                             clear(playerInput.getCellID());
                             break;
                         case PlayerInput.ACTION_FILL:
-                            thisGameContinues = fill(playerInput.getCellID(), playerInput.getFillValue());
+                            thisGameContinues = fillAndDecideContinue(playerInput.getCellID(), playerInput.getFillValue());
                             break;
                         default: 
                             break;
@@ -51,19 +60,19 @@ public class SudokuGame {
                 }
 
                 if (playNewGame) {
-                    iohandler.printComplete();
+                    ioHandler.printComplete();
                 } else {
-                    iohandler.printThanks();
+                    ioHandler.printThanks();
                 }
             }
 
         } catch (Exception e) {
-            iohandler.printUnexpectedError();
+            ioHandler.printUnexpectedError();
         }
     }
 
     private void initialise(Scanner scanner) throws Exception {
-        iohandler = new IOHandler(scanner);
+        ioHandler = new IOHandler(scanner);
         puzzleGenerator = new PuzzleGenerator();
         solver = new SimpleSolver();
     }
@@ -71,29 +80,62 @@ public class SudokuGame {
     private void setupBoard() throws Exception {
         board = puzzleGenerator.generate(30);
         solution = solver.solveUnique(board);
+
+        for (Entry<String, Cell> entry : board.getCells().entrySet()) {
+            if (entry.getValue().isFilled()) {
+                prefilledCellIDs.add(entry.getKey());
+            }
+        }
     }
 
     private void hint() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        List<String> emptyCellIDS = new ArrayList<>();
+        for (Entry<String, Cell> entry : board.getCells().entrySet()) {
+            if (!entry.getValue().isFilled()) {
+                emptyCellIDS.add(entry.getKey());
+            }
+        }
+
+        Collections.shuffle(emptyCellIDS);
+        String chosenCellID = emptyCellIDS.get(0);
+        Integer value = solution.getCells().get(chosenCellID).getValue();
+        ioHandler.printHint(chosenCellID, value);
     }
 
     private void clear(String cellID) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        if (prefilledCellIDs.contains(cellID)) {
+            ioHandler.printPrefilled(cellID);
+        } else {
+            board.getCells().get(cellID).removeValue();
+            ioHandler.printCleared(cellID);
+        }
     }
 
 
     private void check() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        CheckerResult result = Checker.isValidDetailed(board);
+        ioHandler.printCheck(result);
     }
 
-    private boolean fill(String cellID, Integer fillValue) {
-        // check cell is not prefilled
+    // returns false if game is complete
+    private boolean fillAndDecideContinue(String cellID, Integer fillValue) {
 
-        // fill
+        if (prefilledCellIDs.contains(cellID)) {
+            ioHandler.printPrefilled(cellID);
+            return true;
+        }
 
-        // check whether board is filled and valid
-        // return false if game is finished
+        board.getCells().get(cellID).setValue(fillValue);
 
-        // print message and return true if invalid detected
+        if (Checker.isFilled(board)) {
+            if (Checker.isValid(board)) {
+                return false;
+            } else {
+                ioHandler.printCompleteButInvalid();
+            }
+
+        }
+
+        return true;
     }
 }
