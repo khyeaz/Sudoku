@@ -1,6 +1,11 @@
 package com.sudoku.logic;
 
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -48,6 +53,7 @@ public class SimpleSolverTest {
         puzzleBoard.setAllValuesFromString(puzzle);
         Board solvedBoard = simpleSolver.solve(puzzleBoard, 1, null).iterator().next();
 
+        assertTrue(Checker.isFilledAndValid(solvedBoard));
         assertEquals(solved, solvedBoard.toString());
     }
 
@@ -60,6 +66,7 @@ public class SimpleSolverTest {
         puzzleBoard.setAllValuesFromString(puzzle);
         Board solvedBoard = simpleSolver.solve(puzzleBoard, 1, null).iterator().next();
 
+        assertTrue(Checker.isFilledAndValid(solvedBoard));
         assertEquals(solved, solvedBoard.toString());
     }
 
@@ -72,6 +79,7 @@ public class SimpleSolverTest {
         puzzleBoard.setAllValuesFromString(puzzle);
         Board solvedBoard = simpleSolver.solve(puzzleBoard, 1, null).iterator().next();
 
+        assertTrue(Checker.isFilledAndValid(solvedBoard));
         assertEquals(solved, solvedBoard.toString());
     }
 
@@ -84,8 +92,45 @@ public class SimpleSolverTest {
         puzzleBoard.setAllValuesFromString(puzzle);
         Board solvedBoard = simpleSolver.solve(puzzleBoard, 1, null).iterator().next();
 
+        assertTrue(Checker.isFilledAndValid(solvedBoard));
         assertEquals(solved, solvedBoard.toString());
     }
 
+    @Test
+    void testSolveTwoSolutions() {
+        String puzzle =  "295743861\n4318659__\n876192543\n387459216\n612387495\n549216738\n763524189\n928671354\n1549386__";
+    
+        Board puzzleBoard = new Board();
+        puzzleBoard.setAllValuesFromString(puzzle);
+        List<Board> foundSolutions = simpleSolver.solve(puzzleBoard, 9, null);
+        Set<String> solutionsSeen = new HashSet<>();
 
+        assertEquals(2, foundSolutions.size(), "2 solutions expected");
+
+        for (Board solution : foundSolutions) {
+            boolean filledAndValid = Checker.isFilledAndValid(solution);
+            assertTrue(filledAndValid);
+            assertTrue(!solutionsSeen.contains(solution.toString()), "Solution must be unique");
+            solutionsSeen.add(solution.toString());
+        }
+    }
+
+    @Test
+    void testSolveMultipleSolutions() {
+        String puzzle =  "_8___9743\n_5___8_1_\n_1_______\n8____5___\n___8_4___\n___3____6\n_______7_\n_3_5___8_\n9724___5_";
+    
+        Board puzzleBoard = new Board();
+        puzzleBoard.setAllValuesFromString(puzzle);
+        List<Board> foundSolutions = simpleSolver.solve(puzzleBoard, 9, null);
+        Set<String> solutionsSeen = new HashSet<>();
+
+        assertEquals(8, foundSolutions.size(), "8 solutions expected");
+
+        for (Board solution : foundSolutions) {
+            boolean filledAndValid = Checker.isFilledAndValid(solution);
+            assertTrue(filledAndValid);
+            assertTrue(!solutionsSeen.contains(solution.toString()), "Solution must be unique");
+            solutionsSeen.add(solution.toString());
+        }
+    }
 }
