@@ -14,6 +14,7 @@ public class IOHandler {
     static final String ENTER_COMMAND = "Enter command (e.g., A3 4, C5 clear, hint, check, quit):";
     static final String INVALID_COMMAND = "Invalid command given!";
     static final String THANKS = "Thanks for playing!";
+    static final String COMPLETE = "You have successfully completed the Sudoku puzzle!\nPress any key to play again...";
 
     public IOHandler(Scanner scanner) {
         this.scanner = scanner;
@@ -84,6 +85,10 @@ public class IOHandler {
 
     void printUnexpectedError() {
         System.out.println(UNEXPECTED_ERROR);
+    }
+
+    void printComplete() {
+        System.out.println(COMPLETE);
     }
 
 }
