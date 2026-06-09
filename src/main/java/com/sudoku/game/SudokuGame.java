@@ -2,6 +2,7 @@ package com.sudoku.game;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map.Entry;
 import java.util.Scanner;
@@ -57,6 +58,8 @@ public class SudokuGame {
                         default: 
                             break;
                     }
+
+                    ioHandler.printBoardCurrent(board);
                 }
 
                 if (playNewGame) {
@@ -67,6 +70,7 @@ public class SudokuGame {
             }
 
         } catch (Exception e) {
+            e.printStackTrace();
             ioHandler.printUnexpectedError();
         }
     }
@@ -80,12 +84,15 @@ public class SudokuGame {
     private void setupBoard() throws Exception {
         board = puzzleGenerator.generate(30);
         solution = solver.solveUnique(board);
+        prefilledCellIDs = new HashSet<>();
 
         for (Entry<String, Cell> entry : board.getCells().entrySet()) {
             if (entry.getValue().isFilled()) {
                 prefilledCellIDs.add(entry.getKey());
             }
         }
+
+        ioHandler.printBoardStart(board);
     }
 
     private void hint() {
@@ -126,6 +133,7 @@ public class SudokuGame {
         }
 
         board.getCells().get(cellID).setValue(fillValue);
+        ioHandler.printAccepted();
 
         if (Checker.isFilled(board)) {
             if (Checker.isValid(board)) {

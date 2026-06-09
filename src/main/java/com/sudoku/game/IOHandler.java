@@ -1,7 +1,9 @@
 package com.sudoku.game;
 
+import java.util.Objects;
 import java.util.Scanner;
 
+import com.sudoku.domain.Board;
 import com.sudoku.domain.CellGroup;
 import com.sudoku.logic.CheckerResult;
 
@@ -20,7 +22,7 @@ public class IOHandler {
     static final String COMPLETE = "You have successfully completed the Sudoku puzzle!\nPress any key to play again...";
     static final String HINT1 = "Hint: Cell ";
     static final String HINT2 = " = ";
-    static final String CLEARED = "Cleared Cell ";
+    static final String CLEARED = "Move accepted. Cleared Cell ";
     static final String CHECK_PASSED = "No rule violations detected.";
     static final String CHECK_FAILED1 = "Number ";
     static final String CHECK_FAILED2 = " already exists in ";
@@ -30,6 +32,10 @@ public class IOHandler {
     static final String PREFILLED1 = "Invalid move. ";
     static final String PREFILLED2 = " is pre-filled";
     static final String COMPLETE_INVALID = "Board is filled up, but some rule violations exist. Run the 'check' command to find out where.";
+    static final String ACCEPTED = "Move accepted.";
+    static final String HEADER = "  1 2 3 4 5 6 7 8 9\n";
+    static final String START = "Welcome to Sudoku!\n\nHere is your puzzle:";
+    static final String CURRENT = "\nCurrent grid:";
 
     public IOHandler(Scanner scanner) {
         this.scanner = scanner;
@@ -182,6 +188,36 @@ public class IOHandler {
 
     void printCompleteButInvalid() {
         System.out.println(COMPLETE_INVALID);
+    }
+
+    void printAccepted() {
+        System.out.println(ACCEPTED);
+    }
+
+    private void printBoard(Board board) {
+        String result = HEADER;
+
+        for (String row : Board.rowIDs) {
+            result += row + " ";
+
+            for (String col : Board.colIDs) {
+                result += Objects.toString(board.getCells().get(row+col).getValue(), "_") + " ";
+            }
+
+            result += "\n";
+        }
+
+        System.out.println(result);
+    }
+
+    void printBoardStart(Board board) {
+        System.out.println(START);
+        printBoard(board);
+    }
+
+    void printBoardCurrent(Board board) {
+        System.out.println(CURRENT);
+        printBoard(board);
     }
 
 }

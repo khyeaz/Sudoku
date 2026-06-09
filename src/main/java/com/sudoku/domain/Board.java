@@ -12,8 +12,8 @@ public class Board {
     Map<String, Square> squares;
     Map<String, Cell> cells;
 
-    private static final String[] rowIDs = new String[] {"A", "B", "C", "D", "E", "F", "G", "H", "I"};
-    private static final String[] colIDs = new String[] {"1", "2", "3", "4", "5", "6", "7", "8", "9"};
+    public static final String[] rowIDs = new String[] {"A", "B", "C", "D", "E", "F", "G", "H", "I"};
+    public static final String[] colIDs = new String[] {"1", "2", "3", "4", "5", "6", "7", "8", "9"};
 
     public Board() {
         rows = new HashMap<>();
