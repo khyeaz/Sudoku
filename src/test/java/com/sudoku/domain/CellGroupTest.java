@@ -21,7 +21,7 @@ public class CellGroupTest {
             cell.setValue(i + 1);
         }
 
-        cellGroup = new CellGroup(cells, groupID);
+        cellGroup = new CellGroup(cells, groupID, CellGroup.GROUPTYPE_ROW);
     }
 
     @Test
@@ -44,5 +44,24 @@ public class CellGroupTest {
 
         assertEquals(newCell, cellGroup.getCells()[index]);
         assertNotEquals(oldCell, cellGroup.getCells()[index]);
+    }
+
+    @Test
+    void testCellGroupType() {
+        cells = new Cell[9];
+
+        for (int i = 0; i < 9; i++) {
+            Cell cell = new Cell("A", i + "");
+            cells[i] = cell;
+            cell.setValue(i + 1);
+        }
+
+        Row row = new Row(cells, "A");
+        Column col = new Column(cells, "1");
+        Square sqaure = new Square(cells, "0");
+
+        assertEquals(CellGroup.GROUPTYPE_ROW, row.getGroupType());
+        assertEquals(CellGroup.GROUPTYPE_COL, col.getGroupType());
+        assertEquals(CellGroup.GROUPTYPE_SQUARE, sqaure.getGroupType());
     }
 }
