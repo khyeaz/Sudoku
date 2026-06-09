@@ -105,6 +105,7 @@ public class BoardTest {
         String line1 = "123456789\n";
         String line2 = "__123__45\n";
         String test1 = line1 + line2 + line1 + line2 + line1 + line2 + line1 + line2 + line1;
+        test1 = test1.substring(0, test1.length() - 1);
         board.setAllValuesFromString(test1);
         assertEquals(test1, board.toString());
     }

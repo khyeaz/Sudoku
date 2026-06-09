@@ -43,7 +43,7 @@ public class SimpleSolver implements Solver {
         }
     }
 
-    private List<Board> solve(Board board, int numSolutions, Map<String, Set<Integer>> possibilities) {
+    List<Board> solve(Board board, int numSolutions, Map<String, Set<Integer>> possibilities) {
         
         if (possibilities == null) {
             possibilities = generatePossibilities(board);
@@ -78,7 +78,8 @@ public class SimpleSolver implements Solver {
                 cellsToGuess.add(cellID);
             } else if (candidates.size() < minCandidates) {
                 minCandidates = candidates.size();
-                cellsToGuess = Arrays.asList(cellID);
+                cellsToGuess = new ArrayList<>();
+                cellsToGuess.add(cellID);
             }
         }
         Random rand = new Random();
@@ -130,7 +131,7 @@ public class SimpleSolver implements Solver {
      * @param board
      * @return Map of cellID to the set of possible values. Empty Cells only.
      */
-    private Map<String, Set<Integer>> generatePossibilities(Board board) {
+    Map<String, Set<Integer>> generatePossibilities(Board board) {
 
         Map<String, Set<Integer>> possibilities = new HashMap<>();
 
@@ -166,7 +167,7 @@ public class SimpleSolver implements Solver {
      * @param board
      * @param possibilities
      */
-    private void fillGuaranteedCells(Board board, Map<String, Set<Integer>> possibilities) throws Exception {
+    void fillGuaranteedCells(Board board, Map<String, Set<Integer>> possibilities) throws Exception {
         Set<String> toFill = new HashSet<>();
 
         for (String cellID : possibilities.keySet()) {

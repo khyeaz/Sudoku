@@ -118,7 +118,7 @@ public class Board {
             result += "\n";
         }
 
-        return result;
+        return result.substring(0, result.length() - 1);
     }
 
     public void setAllValuesFromString(String values) {
