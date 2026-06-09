@@ -4,8 +4,10 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import com.sudoku.domain.Board;
@@ -13,10 +15,17 @@ import com.sudoku.domain.Cell;
 import com.sudoku.domain.Square;
 
 public class PuzzleGeneratorTest {
+    PuzzleGenerator puzzleGenerator;
+
+    @BeforeEach
+    @SuppressWarnings("unused")
+    void initialise() {
+        puzzleGenerator = new PuzzleGenerator();
+    }
+
     @Test
     void testFillDiagonalSquaresRandomly() {
         Board board = new Board();
-        PuzzleGenerator puzzleGenerator = new PuzzleGenerator();
 
         puzzleGenerator.fillDiagonalSquaresRandomly(board);
 
@@ -45,7 +54,59 @@ public class PuzzleGeneratorTest {
     }
 
     @Test
-    void testGenerate() {
-        // TODO
+    void testGenerate10blank() throws Exception {
+        int numFilled = 81 - 10;
+        Board board = puzzleGenerator.generate(numFilled);
+
+        int filledCount = 0;
+        int blankCount = 0;
+        for (Cell cell : board.getCells().values()) {
+            if (cell.isFilled()) {
+                filledCount++;
+            } else {
+                blankCount++;
+            }
+        }
+
+        assertEquals(numFilled, filledCount);
+        assertEquals(81 - numFilled, blankCount);
+    }
+
+    @Test
+    void testGenerate30blank() throws Exception {
+        int numFilled = 81 - 30;
+        Board board = puzzleGenerator.generate(numFilled);
+
+        int filledCount = 0;
+        int blankCount = 0;
+        for (Cell cell : board.getCells().values()) {
+            if (cell.isFilled()) {
+                filledCount++;
+            } else {
+                blankCount++;
+            }
+        }
+
+        assertEquals(numFilled, filledCount);
+        assertEquals(81 - numFilled, blankCount);
+    }
+
+    @Test
+    void testGenerate51blank() throws Exception {
+        int numFilled = 81 - 51;
+        Board board = puzzleGenerator.generate(numFilled);
+
+        int filledCount = 0;
+        int blankCount = 0;
+        for (Cell cell : board.getCells().values()) {
+            if (cell.isFilled()) {
+                filledCount++;
+            } else {
+                blankCount++;
+            }
+        }
+
+        assertEquals(numFilled, filledCount);
+        assertEquals(81 - numFilled, blankCount);
     }
 }
