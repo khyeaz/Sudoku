@@ -24,14 +24,19 @@ public class SudokuGame {
     Board solution;
     Set<String> prefilledCellIDs;
 
+    // default to 30 filled
     public void run() {
+        run(30, null);
+    }
+
+    public void run(int numFilled, String boardSeed) {
         try (Scanner scanner = new Scanner(System.in)) {
             initialise(scanner);
 
             boolean playNewGame = true;
 
             while (playNewGame) {
-                setupBoard();
+                setupBoard(numFilled, boardSeed);
 
                 boolean thisGameContinues = true;
 
@@ -68,7 +73,6 @@ public class SudokuGame {
                     ioHandler.printThanks();
                 }
             }
-
         } catch (Exception e) {
             e.printStackTrace();
             ioHandler.printUnexpectedError();
@@ -81,8 +85,14 @@ public class SudokuGame {
         solver = new SimpleSolver();
     }
 
-    private void setupBoard() throws Exception {
-        board = puzzleGenerator.generate(30);
+    private void setupBoard(int numFilled, String boardSeed) throws Exception {
+        if (boardSeed == null) {
+             board = puzzleGenerator.generate(numFilled);
+        } else {
+            board = new Board();
+            board.setAllValuesFromString(boardSeed);
+        }
+       
         solution = solver.solveUnique(board);
         prefilledCellIDs = new HashSet<>();
 

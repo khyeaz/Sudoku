@@ -110,6 +110,9 @@ public class IOHandler {
 
     void printComplete() {
         System.out.println(COMPLETE);
+
+        // wait for any key
+        scanner.nextLine();
     }
 
     void printHint(String chosenCellID, Integer value) {
