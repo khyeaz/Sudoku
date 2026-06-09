@@ -17,7 +17,14 @@ public class SudokuGame {
             boolean keepPlaying = true;
 
             while (keepPlaying) {
-                
+                PlayerInput playerInput = iohandler.getPlayerInput();
+
+                switch (playerInput.getAction()) {
+                    case PlayerInput.ACTION_QUIT: 
+                        iohandler.printThanks();
+                        keepPlaying = false;
+                        break;
+                }
             }
 
         } catch (Exception e) {

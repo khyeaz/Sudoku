@@ -1,10 +1,10 @@
 package com.sudoku.logic;
 
 public class CheckerResult {
-    boolean valid;
-    String invalidGroupType;
-    String invalidGroupID;
-    Integer repeatedValue;
+    private final boolean valid;
+    private final String invalidGroupType;
+    private final String invalidGroupID;
+    private final Integer repeatedValue;
 
     public CheckerResult(boolean valid, Integer repeatedValue, String invalidGroupType, String invalidGroupID) {
         this.invalidGroupID = invalidGroupID;
