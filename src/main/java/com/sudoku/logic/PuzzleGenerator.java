@@ -57,7 +57,7 @@ public class PuzzleGenerator {
         Board board = BoardCloner.clone(solved);
 
         int removed = 0;
-        List<String> toTryRemoving = new LinkedList<>(board.getCells().keySet());
+        LinkedList<String> toTryRemoving = new LinkedList<>(board.getCells().keySet());
         Collections.shuffle(toTryRemoving);
         Solver solver = new SimpleSolver();
 
