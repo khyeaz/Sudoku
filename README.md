@@ -1,4 +1,4 @@
-Project compiled with Maven; check the pom file for the appropriate JUnit libraries
+Project compiled with Maven and openjdk version 21.0.10; check the pom file for the appropriate JUnit libraries
 
 How to Run:
 - Invoke the main() method in Main.java
